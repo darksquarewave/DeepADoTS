@@ -11,7 +11,7 @@ from torch.autograd import Variable
 
 class Algorithm(metaclass=abc.ABCMeta):
     def __init__(self, module_name, name, seed, details=False):
-        self.logger = logging.getLogger(module_name)
+        #self.logger = logging.getLogger(module_name)
         self.name = name
         self.seed = seed
         self.details = details

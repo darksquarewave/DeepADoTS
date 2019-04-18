@@ -135,7 +135,13 @@ class Evaluator:
                     self.logger.error(f'An exception occurred while training {det.name} on {ds}: {e}')
                     self.logger.error(traceback.format_exc())
                     self.results[(ds.name, det.name)] = np.zeros_like(y_test)
-            gc.collect()
+
+    def score(self):
+        for ds in progressbar.progressbar(self.datasets):
+            (X_train, y_train, X_test, y_test) = ds.data()
+            for det in progressbar.progressbar(self.detectors):
+                score = det.predict(X_test.copy())
+                self.results[(ds.name, det.name)] = score
 
     def evaluate(self):
         for ds in progressbar.progressbar(self.datasets):
